@@ -39,7 +39,28 @@ It's similar to the \<div> element in HTML, but with some added functionality sp
   - It uses flexbox layout by default, making it really easy to control how its child components are laid out within the container
 
 ### Other function components
-- TouchableOpacity: great for creating a button
+- TouchableOpacity: great for creating a button. Like a cousin to the Button component in React (but more room for customization and flexibility)
+- TouchableHighlight: allows Views to respond to touch in a unique way when touched
+- TouchableWithoutFeedback: for elements that are clickable but you don't want any visual feedback when pressed (helpful for Links and images that don't need special stylings or effects)
+- ActivityIndicator: shows spinner/loading indicator
+- Button: acts like a button
+- Flatlist: used for rendering a long list of items that need to be scrolled efficiently (like the map function in React, but with features like
+    - optimized scroll performance
+    - item separation)
+  <br />Better for largers lists that need smooth scrolling
+- ScrollView: like a magic box that can hold multiple components and views, providing a scrolling container for them. Allows users to explore all the content (making the app more intuitive and user-friendly)
+- SafeAreaView: provides a safe zone to render your app's content without it being covered by the device's hardware features like the status bar
+    - great for apps that are supported on devices with different screen sizes and shapes.
+    - This is import from 'react-native-safe-area-context'
+- Image: display images
+- ImageBackground: display images as background
+- Modal: display a modal
+- Alert: display a typical notification style alert
+- Switch: displays a toggle feature
+- StatusBar: allows you to manipulate how a status bar looks in your app
+<br />
+
+There are many more elements that can be found in the documentation
 
 
 
