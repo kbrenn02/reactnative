@@ -73,4 +73,9 @@ There are many more elements that can be found in the documentation
     - Note: have "Expo Go" app downloaded on your phone. Scan the QR code that shows up to see your app.
 - To add to point 4, index.tsx is our homepage, but _layout.tsx applies to all pages, like a NavBar or Footer
 
+### Coding in React Native
+- rnfes is the RN equivalent of rafce
+- When editing the _layout.tsx, we have to specify how to render different screens and define the default one
+- If you want to create more routes, just add them in the app folder
+    - This is how we create however many screens we want in the application
   
