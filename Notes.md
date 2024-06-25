@@ -62,7 +62,9 @@ It's similar to the \<div> element in HTML, but with some added functionality sp
 
 There are many more elements that can be found in the documentation
 
-
-
+## Create a React Native Project (in Expo)
+1. Create an Expo project. Run `npx create-expo-app` and name the app
+2. Install dependencies. Run `npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar`
+3. Set up the entry point
 
   
