@@ -65,6 +65,12 @@ There are many more elements that can be found in the documentation
 ## Create a React Native Project (in Expo)
 1. Create an Expo project. Run `npx create-expo-app` and name the app
 2. Install dependencies. Run `npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar`
-3. Set up the entry point
+3. Set up the entry point. In package.json, override what the default for "main" is with "main": "expo-router/entry"
+4. In the app folder, the "_layout.tsx" is our main app file (starting point of our application)
+    - I noticed it was under app > (tabs) > index.tsx. Editing that file showed edits on my Expo Go app
+5. Modify project configuration to deep link `scheme` in the app config. Go to app.json, change the "scheme" to "[app name]"
+6. Run `npx expo start` to run the application
+    - Note: have "Expo Go" app downloaded on your phone. Scan the QR code that shows up to see your app.
+- To add to point 4, index.tsx is our homepage, but _layout.tsx applies to all pages, like a NavBar or Footer
 
   
