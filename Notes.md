@@ -72,6 +72,8 @@ There are many more elements that can be found in the documentation
 6. Run `npx expo start` to run the application
     - Note: have "Expo Go" app downloaded on your phone. Scan the QR code that shows up to see your app.
 - To add to point 4, index.tsx is our homepage, but _layout.tsx applies to all pages, like a NavBar or Footer
+7. Install NativeWind for TailwindCSS type styling. Run `npm install nativewind` and `npm install --save-dev tailwindcss@3.3.2`
+8. Set up TailwindCSS. Run `npx tailwindcss init` to create a tailwind.config.js file. Then update the content in the tailwind config file (according to documentation) and the plugins on the babel.config.js file (according to documentation)
 
 ### Coding in React Native
 - rnfes is the RN equivalent of rafce
