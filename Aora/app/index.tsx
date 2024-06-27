@@ -8,7 +8,7 @@ const StyledView = styled(View)
 
 export default function HomeScreen() {
   return (
-    <StyledView className='flex-1 items-center justify-center bg-white'>
+    <StyledView className='flex-1 items-center justify-center bg-red-500'>
         <Text>Aora!</Text>
         <StatusBar />
         <Link href='/profile' style={{ color: 'blue' }}>Go to Profile</Link>
