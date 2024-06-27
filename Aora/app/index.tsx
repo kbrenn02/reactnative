@@ -1,15 +1,15 @@
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { styled } from "nativewind";
+import { styled } from 'nativewind';
 
-const StyledView = styled(View);
-const StyledText = styled(Text);
+const StyledView = styled(View)
+
 
 export default function HomeScreen() {
   return (
-    <StyledView className="flex-1 items-center justify-center bg-red-500">
-        <StyledText className="text-3xl">Aora!</StyledText>
+    <StyledView className='flex-1 items-center justify-center bg-white'>
+        <Text>Aora!</Text>
         <StatusBar />
         <Link href='/profile' style={{ color: 'blue' }}>Go to Profile</Link>
     </StyledView>
