@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Link } from 'expo-router'
@@ -22,6 +22,10 @@ const SignIn = () => {
 
     return (
         <SafeAreaView className='bg-primary h-full'>
+            <KeyboardAvoidingView 
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0} // Adjust this value as needed
+            >
             <ScrollView>
                 <View className='w-full justify-center min-h-[80vh] px-4 my-6'>
                     <Image 
@@ -64,6 +68,7 @@ const SignIn = () => {
                     </View>
                 </View>
             </ScrollView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
