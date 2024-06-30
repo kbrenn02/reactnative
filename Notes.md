@@ -85,3 +85,14 @@ There are many more elements that can be found in the documentation
 1. Routing Configuration: It sets up the routes and how they are nested or related to each other.
 **2. Layout Wrapping: It can wrap screens with common UI elements like headers, footers, or navigation components.**
 3. Screen Options: It allows you to configure options for different screens, such as whether to show the header, the title of the screen, and other navigation-related settings.
+
+## Appwrite for the Backend
+To create backend functionality for your app, including a DB, do it through Appwrite (cloud.appwrite.io)
+1. Create a new project in appwrite and name it
+2. Add a platform (appwrite will eventually add an "Expo" option to make it cross platform, but for now I did Apple)
+3. Add the app name and the Bundle ID, using their template for the bundle ID (for this, I did com.kb.aora)
+4. Skip optional steps
+5. Add the bundle ID under the OS you chose above in the app.json file, starting with "package". EX: "package": "com.kb.aora"
+6. Create a new folder in the root directory called "lib". Then create a new file called "appwrite.ts" and follow what I did in this project, using the project ID we took from appwrite
+7. Go to the "database" tab in appwrite and create a DB. Then copy the DB ID to app.json file
+8. 
