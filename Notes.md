@@ -96,6 +96,7 @@ To create backend functionality for your app, including a DB, do it through Appw
 6. Create a new folder in the root directory called "lib". Then create a new file called "appwrite.ts" and follow what I did in this project, using the project ID we took from appwrite
 7. Go to the "database" tab in appwrite and create a DB. Then copy the DB ID to app.json file
 8. Create collection for 'users' and add the ID to app.json. Do the same for a "videos" collection
+    - A collection is a grouping of related documents that share a common structure.
 9. Add attributes to the users collection: username, email, avatar, accountId (and set their data types)
 10. Go to Settings in the users collections and add a role under "permissions" for Any with all CRUD abilities
 11. Do steps 9 and 10 for the 'videos' collection
