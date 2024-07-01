@@ -101,3 +101,6 @@ To create backend functionality for your app, including a DB, do it through Appw
 10. Go to Settings in the users collections and add a role under "permissions" for Any with all CRUD abilities
 11. Do steps 9 and 10 for the 'videos' collection
 12. Go to "storage" and create a new bucket and add the ID to app.json. Update settings to give Users full CRUD permissions and guests Read only access
+13. Install appwrite through terminal: `npx expo install react-native-appwrite react-native-url-polyfill` (found install instructions on the appwrite github page: https://github.com/appwrite/sdk-for-react-native)
+14. Initialize the SDK in the appwrite.ts file using the information from the steps above (initialization code from the appwrite github)
+15. Make first request in the appwrite.ts file (request code from the appwrite github)
