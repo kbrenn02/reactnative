@@ -26,7 +26,7 @@ const SignIn = () => {
 
         try {
             const result = await signIn({email:form.email, password:form.password});
-            // set it to global state...
+            // set it to global state (allowing a user to not have to log in every time they open the app)
 
             router.replace('/home')
         } catch (error) {
