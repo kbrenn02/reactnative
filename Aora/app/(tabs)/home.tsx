@@ -6,48 +6,35 @@ import SearchInput from '../../components/SearchInput'
 import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
 import { getAllPosts } from '../../lib/appwrite'
+import useAppwrite from '@/lib/useAppwrite'
+
 
 const Home = () => {
 
-    const [data, setData] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-
-            try {
-                const response = await getAllPosts();
-
-                setData(response)
-            } catch (error) {
-                let errorMessage = 'An unknown error occurred'
-                Alert.alert('Error', errorMessage)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        fetchData();
-    }, [])
-
-    console.log(data);
+    const { data: posts, refetch } = useAppwrite(getAllPosts);
 
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = async () => {
         setRefreshing(true);
-
+        // refetch was made in the useAppwrite.tsx file and basically just calls the fetch function
+        // to reload what is being shown.
+        // As a result, we are able to call the refetch function and refresh the page like on Insta, TikTok, etc.
+        await refetch();
         setRefreshing(false);
     }
 
     return (
         <SafeAreaView className='bg-primary h-full'>
             <FlatList 
-              data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
-              keyExtractor={(item) => item.id.toString()}
+              data={posts}
+              // Property '$id' does not exist on type 'never'.
+              // @ts-ignore: Ignore the type error for now
+              keyExtractor={(item) => item.$id}
               renderItem={({ item }) => (
-                <Text className='text-3xl text-white'>{item.id}</Text>
+                // Property 'title' does not exist on type 'never'.
+                // @ts-ignore: Ignore the type error for now
+                <Text className='text-3xl text-white'>{item.title}</Text>
               )}
               ListHeaderComponent={() => (
                 <View className='my-6 px-4 space-y-6'>
