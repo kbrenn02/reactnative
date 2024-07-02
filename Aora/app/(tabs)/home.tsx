@@ -34,6 +34,10 @@ const Home = () => {
                     </View>
 
                     <SearchInput/>
+
+                    <View>
+                        
+                    </View>
                 </View>
               )}
             />
