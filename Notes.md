@@ -104,3 +104,7 @@ To create backend functionality for your app, including a DB, do it through Appw
 13. Install appwrite through terminal: `npx expo install react-native-appwrite react-native-url-polyfill` (found install instructions on the appwrite github page: https://github.com/appwrite/sdk-for-react-native)
 14. Initialize the SDK in the appwrite.ts file using the information from the steps above (initialization code from the appwrite github)
 15. Make first request in the appwrite.ts file (request code from the appwrite github)
+
+
+#### More installations
+- npm install react-native-animatable expo-av (this allows for animations with the first and playing videos with the second)
