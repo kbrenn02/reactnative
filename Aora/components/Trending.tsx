@@ -1,7 +1,8 @@
 import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-import React, { useState } from 'react'
-import { icons } from '@/constants';
+import React, { useState, useRef, useEffect } from 'react'
+import { icons } from '../constants';
+import { Video, ResizeMode } from 'expo-av';
 
 // Define custom animations
 Animatable.initializeRegistryWithDefinitions({
@@ -29,17 +30,43 @@ Animatable.initializeRegistryWithDefinitions({
 
 const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
     const [play, setPlay] = useState(false);
+    const animatableRef = useRef<any>(null); // Ref for Animatable.View
+
+    useEffect(() => {
+        // Trigger zoom animation when activeItem changes
+        if (animatableRef.current) {
+            if (activeItem === item.id) {
+                animatableRef.current.animate('zoomIn', 500); // Trigger zoomIn animation
+            } else {
+                animatableRef.current.animate('zoomOut', 500); // Trigger zoomOut animation
+            }
+        }
+    }, [activeItem, item.id]);
 
     return (
         <Animatable.View
             className='mr-5'
-            animation={activeItem === item.$id ? 'zoomIn' : 'zoomOut'}
-            duration={500}
+            ref={animatableRef}
         >
             { play ? (
-                <Text className='text-white'>Playing</Text>
+                <Video
+                    source={{ uri: item.video }}
+                    className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
+                    resizeMode={ResizeMode.CONTAIN}
+                    useNativeControls
+                    shouldPlay
+                    onPlaybackStatusUpdate={(playbackStatus) => {
+                        if (playbackStatus.isLoaded && playbackStatus.didJustFinish) {
+                            setPlay(false);
+                        }
+                    }}
+                />
             ) : (
-                <TouchableOpacity className='relative justify-center items-center' activeOpacity={0.7} onPress={() => setPlay(true)}>
+                <TouchableOpacity 
+                    className='relative justify-center items-center' 
+                    activeOpacity={0.7} 
+                    onPress={() => setPlay(true)}
+                >
                     <ImageBackground 
                         source={{ uri: item.thumbnail }}
                         className='w-52 h-72 rounded-[35px] my-5 overflow-hidden shadow-lg shadow-black/40'
