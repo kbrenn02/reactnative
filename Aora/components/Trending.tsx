@@ -1,10 +1,7 @@
-import { View, Text, FlatList, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import React, { useState } from 'react'
-
-// Create animatable components
-const AnimatableView = Animatable.createAnimatableComponent(View);
-const AnimatableText = Animatable.createAnimatableComponent(Text);
+import { icons } from '@/constants';
 
 // Define custom animations
 Animatable.initializeRegistryWithDefinitions({
@@ -14,14 +11,14 @@ Animatable.initializeRegistryWithDefinitions({
             scaleY: 0.9,
         },
         to: {
-            scaleX: 1,
-            scaleY: 1,
+            scaleX: 1.1,
+            scaleY: 1.1,
         },
     },
     zoomOut: {
         from: {
-            scaleX: 1,
-            scaleY: 1,
+            scaleX: 1.1,
+            scaleY: 1.1,
         },
         to: {
             scaleX: 0.9,
@@ -34,7 +31,7 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
     const [play, setPlay] = useState(false);
 
     return (
-        <AnimatableView
+        <Animatable.View
             className='mr-5'
             animation={activeItem === item.$id ? 'zoomIn' : 'zoomOut'}
             duration={500}
@@ -46,27 +43,48 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
                     <ImageBackground 
                         source={{ uri: item.thumbnail }}
                         className='w-52 h-72 rounded-[35px] my-5 overflow-hidden shadow-lg shadow-black/40'
+                        resizeMode='cover'
+                    />
+
+                    <Image 
+                        source={icons.play}   
+                        className='w-12 h-12 absolute'
+                        resizeMode='contain' 
                     />
                 </TouchableOpacity>
             )}
-        </AnimatableView>
+        </Animatable.View>
     )
 }
 
 const Trending = ({ posts }: Record<string, any>) => {
 
-    const [activeItem, setActiveItem] = useState(posts[0])
+    const [activeItem, setActiveItem] = useState(posts[1])
+
+    const viewableItemsChange = ({ viewableItems }: any) => {
+        if(viewableItems.length > 0) {
+            setActiveItem(viewableItems[0].key)
+        }
+    }
 
     return (
         <FlatList 
             data={posts}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <TrendingItem activeItem={activeItem} item={item}/>
             )}
+            onViewableItemsChanged={viewableItemsChange}
+            viewabilityConfig={{
+                itemVisiblePercentThreshold: 70
+            }}
+            // No overload matches this call
+            // @ts-ignore: Ignore the type error for now
+            contentOffset={{ x: 170 }}
             horizontal
         />
     )
 }
 
 export default Trending
+
