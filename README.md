@@ -2,9 +2,9 @@
 An example of my experience creating a video sharing app using React Native. 
 
 ### Technologies Used
-React Native
-NativeWind
-Appwrite.io
+- React Native
+- NativeWind
+- Appwrite.io
 
 ### Run the Program
 To run the Aora program on your local device:
