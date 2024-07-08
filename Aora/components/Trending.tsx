@@ -2,29 +2,17 @@ import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from '
 import * as Animatable from 'react-native-animatable'
 import React, { useState, useRef, useEffect } from 'react'
 import { icons } from '../constants';
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode, Audio } from 'expo-av';
 
 // Define custom animations
 Animatable.initializeRegistryWithDefinitions({
     zoomIn: {
-        from: {
-            scaleX: 0.9,
-            scaleY: 0.9,
-        },
-        to: {
-            scaleX: 1.1,
-            scaleY: 1.1,
-        },
+        from: { scaleX: 0.9, scaleY: 0.9 },
+        to: { scaleX: 1.1, scaleY: 1.1 },
     },
     zoomOut: {
-        from: {
-            scaleX: 1.1,
-            scaleY: 1.1,
-        },
-        to: {
-            scaleX: 0.9,
-            scaleY: 0.9,
-        },
+        from: { scaleX: 1.1, scaleY: 1.1 },
+        to: { scaleX: 0.9, scaleY: 0.9 },
     },
 });
 
@@ -32,6 +20,7 @@ Animatable.initializeRegistryWithDefinitions({
 const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
     const [play, setPlay] = useState(false);
     const animatableRef = useRef<any>(null); // Ref for Animatable.View
+    const videoRef = useRef<any>(null);
 
     useEffect(() => {
         // Trigger zoom animation when activeItem changes
@@ -44,6 +33,32 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
         }
     }, [activeItem, item.id]);
 
+    useEffect(() => {
+        if (play && videoRef.current) {
+            videoRef.current.playAsync();
+        }
+    }, [play]);
+
+    useEffect(() => {
+        (async () => {
+            await Audio.setAudioModeAsync({
+                allowsRecordingIOS: false,
+                // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+                playsInSilentModeIOS: true,
+                shouldDuckAndroid: true,
+                // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+                playThroughEarpieceAndroid: false,
+            });
+        })();
+    }, []);
+
+    const handlePlaybackStatusUpdate = (playbackStatus: any) => {
+        console.log(`Playback status for ${item.$id}:`, playbackStatus);
+        if (playbackStatus.isLoaded && playbackStatus.didJustFinish) {
+            setPlay(false);
+        }
+    };
+
     return (
         <Animatable.View
             className="mr-5"
@@ -51,22 +66,21 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
         >
             { play ? (
                 <Video
-                    source={{ uri: item.video }}
+                // This was uri: items.video but the videos that were uploaded weren't supported, so this is a filler video
+                    source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }}
                     className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
                     resizeMode={ResizeMode.CONTAIN}
                     useNativeControls
                     shouldPlay
-                    onPlaybackStatusUpdate={(playbackStatus) => {
-                        if (playbackStatus.isLoaded && playbackStatus.didJustFinish) {
-                            setPlay(false);
-                        }
-                    }}
+                    isMuted={false}
+                    volume={1.0}
+                    onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
                 />
             ) : (
                 <TouchableOpacity 
                     className='relative justify-center items-center' 
                     activeOpacity={0.7} 
-                    onPress={() => setPlay(true)}
+                    onPress={() => {setPlay(true)}}
                 >
                     <ImageBackground 
                         source={{ uri: item.thumbnail }}
@@ -90,15 +104,15 @@ const Trending = ({ posts }: Record<string, any>) => {
     const [activeItem, setActiveItem] = useState(posts[1])
 
     const viewableItemsChanged = ({ viewableItems }: any) => {
-        if(viewableItems.length > 0) {
-            setActiveItem(viewableItems[0].key)
+        if (viewableItems.length > 0) {
+            setActiveItem(viewableItems[0].key);
         }
     }
 
     return (
         <FlatList 
             data={posts}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <TrendingItem activeItem={activeItem} item={item} key={item.id}/>
             )}

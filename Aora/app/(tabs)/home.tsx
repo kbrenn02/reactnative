@@ -32,7 +32,7 @@ const Home = () => {
               data={posts}
               // Property '$id' does not exist on type 'never'.
               // @ts-ignore: Ignore the type error for now
-              keyExtractor={(item) => item.$id}
+              keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <VideoCard video={item}/>
               )}
@@ -74,7 +74,6 @@ const Home = () => {
                     title="No Videos Found"
                     subtitle="Be the first one to upload a video"
                 />
-                // <Text className='text-white'>Empty</Text>
               )}
               refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
             />
