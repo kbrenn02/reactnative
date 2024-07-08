@@ -25,13 +25,16 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
     useEffect(() => {
         // Trigger zoom animation when activeItem changes
         if (animatableRef.current) {
-            if (activeItem === item.id) {
+            if (activeItem === item.$id) {
+                // console.log(activeItem)
                 animatableRef.current.animate('zoomIn', 500); // Trigger zoomIn animation
             } else {
                 animatableRef.current.animate('zoomOut', 500); // Trigger zoomOut animation
             }
         }
-    }, [activeItem, item.id]);
+    }, [activeItem, item.$id]);
+
+    console.log("This is the active item: ", activeItem)
 
     useEffect(() => {
         if (play && videoRef.current) {
@@ -101,20 +104,22 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
 
 const Trending = ({ posts }: Record<string, any>) => {
 
-    const [activeItem, setActiveItem] = useState(posts[1])
+    const [activeItem, setActiveItem] = useState(posts[1].$id)
 
     const viewableItemsChanged = ({ viewableItems }: any) => {
         if (viewableItems.length > 0) {
-            setActiveItem(viewableItems[0].key);
+            setActiveItem(viewableItems[0].item.$id);
         }
     }
+
+    console.log(posts[0])
 
     return (
         <FlatList 
             data={posts}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.$id}
             renderItem={({ item }) => (
-                <TrendingItem activeItem={activeItem} item={item} key={item.id}/>
+                <TrendingItem activeItem={activeItem} item={item} key={item.$id}/>
             )}
             onViewableItemsChanged={viewableItemsChanged}
             viewabilityConfig={{

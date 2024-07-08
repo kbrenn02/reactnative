@@ -32,7 +32,7 @@ const Home = () => {
               data={posts}
               // Property '$id' does not exist on type 'never'.
               // @ts-ignore: Ignore the type error for now
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.$id}
               renderItem={({ item }) => (
                 <VideoCard video={item}/>
               )}
