@@ -26,15 +26,12 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
         // Trigger zoom animation when activeItem changes
         if (animatableRef.current) {
             if (activeItem === item.$id) {
-                // console.log(activeItem)
                 animatableRef.current.animate('zoomIn', 500); // Trigger zoomIn animation
             } else {
                 animatableRef.current.animate('zoomOut', 500); // Trigger zoomOut animation
             }
         }
     }, [activeItem, item.$id]);
-
-    console.log("This is the active item: ", activeItem)
 
     useEffect(() => {
         if (play && videoRef.current) {
@@ -111,8 +108,6 @@ const Trending = ({ posts }: Record<string, any>) => {
             setActiveItem(viewableItems[0].item.$id);
         }
     }
-
-    console.log(posts[0])
 
     return (
         <FlatList 
