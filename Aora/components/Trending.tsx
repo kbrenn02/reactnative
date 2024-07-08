@@ -101,7 +101,7 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
 
 const Trending = ({ posts }: Record<string, any>) => {
 
-    const [activeItem, setActiveItem] = useState(posts[1].$id)
+    const [activeItem, setActiveItem] = useState(posts[1])
 
     const viewableItemsChanged = ({ viewableItems }: any) => {
         if (viewableItems.length > 0) {
