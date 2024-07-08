@@ -28,14 +28,26 @@ Animatable.initializeRegistryWithDefinitions({
     },
 });
 
+
 const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
     const [play, setPlay] = useState(false);
+    const animatableRef = useRef<any>(null); // Ref for Animatable.View
+
+    useEffect(() => {
+        // Trigger zoom animation when activeItem changes
+        if (animatableRef.current) {
+            if (activeItem === item.id) {
+                animatableRef.current.animate('zoomIn', 500); // Trigger zoomIn animation
+            } else {
+                animatableRef.current.animate('zoomOut', 500); // Trigger zoomOut animation
+            }
+        }
+    }, [activeItem, item.id]);
 
     return (
         <Animatable.View
             className="mr-5"
-            animation={activeItem === item.$id ? 'zoomIn' : 'zoomOut'}
-            duration={500}
+            ref={animatableRef}
         >
             { play ? (
                 <Video
@@ -77,7 +89,7 @@ const Trending = ({ posts }: Record<string, any>) => {
 
     const [activeItem, setActiveItem] = useState(posts[1])
 
-    const viewableItemsChange = ({ viewableItems }: any) => {
+    const viewableItemsChanged = ({ viewableItems }: any) => {
         if(viewableItems.length > 0) {
             setActiveItem(viewableItems[0].key)
         }
@@ -86,11 +98,11 @@ const Trending = ({ posts }: Record<string, any>) => {
     return (
         <FlatList 
             data={posts}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-                <TrendingItem activeItem={activeItem} item={item}/>
+                <TrendingItem activeItem={activeItem} item={item} key={item.id}/>
             )}
-            onViewableItemsChanged={viewableItemsChange}
+            onViewableItemsChanged={viewableItemsChanged}
             viewabilityConfig={{
                 itemVisiblePercentThreshold: 70
             }}
