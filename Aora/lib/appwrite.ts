@@ -21,6 +21,14 @@ const {
     storageId,
 } = appwriteConfig;
 
+type User = {
+    id: string,
+    email: string,
+    password: string,
+    username: string,
+    avatar: string
+};
+
 
 // Init your React Native SDK
 const client = new Client();
@@ -100,7 +108,7 @@ export const signIn = async ({ email, password }: { email: any; password: any })
     }
 }
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<User | undefined> => {
     try {
         const currentAccount = await account.get();
 
@@ -185,5 +193,15 @@ export const getUserPosts = async (userId: any) => {
         return posts.documents;
     } catch (error) {
         throw new Error;
+    }
+}
+
+export const signOut = async () => {
+    try {
+        const session = await account.deleteSession('current')
+
+        return session;
+    } catch (error) {
+        throw new Error
     }
 }

@@ -2,23 +2,28 @@ import { View, FlatList, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserPosts } from "../../lib/appwrite";
+import { getUserPosts, signOut } from "../../lib/appwrite";
 import EmptyState from "../../components/EmptyState";
 import VideoCard from "../../components/VideoCard";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import InfoBox from "../../components/InfoBox";
+import { router } from "expo-router";
 
 const Profile = () => {
 
-    const { user, setUser, setIsLoggedIn } = useGlobalContext()
+    const { user, setUser, setIsLoggedIn } = useGlobalContext();
     // User is potentially null.
     // @ts-ignore: Ignore the type error for now
     const { data: posts } = useAppwrite(() => getUserPosts(user.id));
     // with how the 'User' is defined in GlobalProvider, I added an "id" attribute, not the $id that
 
-    const logout = () => {
+    const logout =  async() => {
+        await signOut();
+        setUser(null);
+        setIsLoggedIn(false)
 
+        router.replace('/sign-in')
     }
 
     return (

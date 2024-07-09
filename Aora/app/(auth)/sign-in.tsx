@@ -6,10 +6,12 @@ import { Link, router } from 'expo-router'
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-import { signIn } from '../../lib/appwrite'
+import { getCurrentUser, signIn } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignIn = () => {
 
+    const { setUser, setIsLoggedIn } = useGlobalContext();
     const [form, setForm] = useState({
         email: '',
         password: ''
@@ -25,10 +27,19 @@ const SignIn = () => {
         setIsSubmitting(true);
 
         try {
-            const result = await signIn({email:form.email, password:form.password});
-            // set it to global state (allowing a user to not have to log in every time they open the app)
-
-            router.replace('/home')
+            await signIn({email:form.email, password:form.password});
+            
+            const result = await getCurrentUser();
+            if (result) {
+                setUser(result);
+                setIsLoggedIn(true);
+                router.replace('/home');
+            } else {
+                setUser(null);
+                setIsLoggedIn(false);
+                // Handle case where user is not found
+                console.error("User not found");
+            }
         } catch (error) {
             console.error(error);
 
