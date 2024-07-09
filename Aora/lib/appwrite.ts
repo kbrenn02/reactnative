@@ -172,3 +172,17 @@ export const searchPosts = async (query: any) => {
         throw new Error;
     }
 }
+
+export const getUserPosts = async (userId: any) => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [Query.equal('creator', userId)]
+        )
+        
+        return posts.documents;
+    } catch (error) {
+        throw new Error;
+    }
+}
