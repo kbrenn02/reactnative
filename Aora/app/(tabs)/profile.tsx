@@ -9,7 +9,8 @@ import EmptyState from "../../components/EmptyState";
 import SearchInput from "../../components/SearchInput";
 import VideoCard from "../../components/VideoCard";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { icons } from "@/constants";
+import { icons } from "../../constants";
+import InfoBox from "../../components/InfoBox";
 
 const Profile = () => {
 
@@ -53,6 +54,8 @@ const Profile = () => {
                                 resizeMode="cover"
                             />
                         </View>
+
+                        <InfoBox />
                     </View>
                 )}
 

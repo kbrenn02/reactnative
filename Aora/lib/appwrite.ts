@@ -119,6 +119,7 @@ export const getCurrentUser = async () => {
             email: currentUser.documents[0].email,
             password: currentUser.documents[0].password,
             username: currentUser.documents[0].username,
+            avatar: currentUser.documents[0].avatar
         };
     } catch (error) {
         console.log(error)
