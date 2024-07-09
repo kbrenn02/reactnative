@@ -1,12 +1,9 @@
-import { useEffect } from "react";
-import { useLocalSearchParams } from "expo-router";
-import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, FlatList, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserPosts } from "../../lib/appwrite";
 import EmptyState from "../../components/EmptyState";
-import SearchInput from "../../components/SearchInput";
 import VideoCard from "../../components/VideoCard";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
@@ -47,6 +44,7 @@ const Profile = () => {
                                 className="w-6 h-6"
                             />
                         </TouchableOpacity>
+                        {/* Avatar display */}
                         <View className="w-16 h-16 border border-secondary rounded-lg justify-center items-center">
                             <Image 
                                 source={{ uri: user?.avatar }}
@@ -55,7 +53,29 @@ const Profile = () => {
                             />
                         </View>
 
-                        <InfoBox />
+                        {/* Username display */}
+                        <InfoBox 
+                            title={user?.username}
+                            containerStyles='mt-5'
+                            titleStyles='text-lg'
+                        />
+
+                        {/* Posts and followers display. They are side by side */}
+                        <View className="mt-5 flex-row">
+                            <InfoBox 
+                                title={posts.length || 0}
+                                subtitle="Posts"
+                                containerStyles='mr-10'
+                                titleStyles='text-xl'
+                            />
+
+                            <InfoBox 
+                                title="1.4k"
+                                subtitle="Followers"
+                                titleStyles='text-xl'
+                            />
+                        </View>
+
                     </View>
                 )}
 
