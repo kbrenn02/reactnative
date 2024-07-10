@@ -1,5 +1,6 @@
 
 import { Account, Avatars, Client, Databases, ID, Query } from 'react-native-appwrite';
+import { User } from '../context/GlobalProvider';
 
 export const appwriteConfig = {
     endpoint: 'https://cloud.appwrite.io/v1',
@@ -20,14 +21,6 @@ const {
     videoCollectionId,
     storageId,
 } = appwriteConfig;
-
-type User = {
-    id: string,
-    email: string,
-    password: string,
-    username: string,
-    avatar: string
-};
 
 
 // Init your React Native SDK
