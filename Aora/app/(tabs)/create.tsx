@@ -17,7 +17,7 @@ const Create = () => {
         prompt: ''
     })
 
-    const submit = () = {}
+    // const submit = () = {}
 
     return (
         <SafeAreaView className='bg-primary h-full'>
@@ -102,7 +102,7 @@ const Create = () => {
 
                 <CustomButton 
                     title="Submit & Publish"
-                    handlePress={submit}
+                    // handlePress={submit}
                     containerStyles="mt-7"
                     isLoading={uploading}
                 />
