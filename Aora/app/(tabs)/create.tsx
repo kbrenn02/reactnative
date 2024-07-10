@@ -1,10 +1,12 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { Video, ResizeMode } from 'expo-av'
+import * as DocumentPicker from 'expo-document-picker'
 import { icons } from '../../constants'
 import CustomButton from '../../components/CustomButton'
+import { router } from 'expo-router'
 
 const Create = () => {
 
@@ -17,7 +19,60 @@ const Create = () => {
         prompt: ''
     })
 
-    // const submit = () = {}
+    const openPicker = async (selectType: any) => {
+        // Open up a modal that lets you pick and image or video
+        const result = await DocumentPicker.getDocumentAsync
+        ({
+            type: selectType === 'image' 
+                ? ['image/png', 'image/jpg']
+                : ['video/mp4', 'video/gif']
+        })
+
+        if(!result.canceled) {
+            if(selectType === 'image') {
+                // the ...form spreads out the children elements in the form, keeping everything the same except for the
+                // the one that is changed (as shown by the thumbnail: result)
+                // @ts-ignore: Ignore the type error for now
+                setForm({...form, thumbnail: result.assets[0] })
+            }
+
+            if(selectType === 'video') {
+                // @ts-ignore: Ignore the type error for now
+                setForm({...form, video: result.assets[0] })
+            }
+        } else {
+            setTimeout(() => {
+                Alert.alert('Document picked', JSON.stringify(result, null, 2))
+            }, 100)
+        }
+    };
+
+    const submit = () => {
+        if(!form.title || !form.title || !form.thumbnail || !form.video) {
+            return Alert.alert('Please fill in all the fields')
+        }
+
+        setUploading(true)
+
+        try {
+            
+
+            Alert.alert('Success', 'Post uploaded successfully')
+
+            router.push('/home')
+        } catch (error) {
+            Alert.alert('Error', 'There was an error uploading your content. Please try again.')
+        } finally {
+            setForm({
+                title: '',
+                video: null,
+                thumbnail: null,
+                prompt: ''
+            })
+
+            setUploading(false)
+        }
+    }
 
     return (
         <SafeAreaView className='bg-primary h-full'>
@@ -40,7 +95,7 @@ const Create = () => {
                         Upload Video
                     </Text>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => openPicker('video')}>
                         {form.video ? (
                             <Video 
                             // @ts-ignore: Ignore the type error for now
@@ -69,7 +124,7 @@ const Create = () => {
                         Thumbnail Image
                     </Text>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => openPicker('image')}>
                         {form.thumbnail ? (
                             <Image 
                             // @ts-ignore: Ignore the type error for now
@@ -102,7 +157,7 @@ const Create = () => {
 
                 <CustomButton 
                     title="Submit & Publish"
-                    // handlePress={submit}
+                    handlePress={submit}
                     containerStyles="mt-7"
                     isLoading={uploading}
                 />
