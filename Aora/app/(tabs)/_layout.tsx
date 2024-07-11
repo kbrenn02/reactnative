@@ -50,7 +50,9 @@ const TabsLayout = () => {
                     )
                   }}
                 />
-                <Tabs.Screen 
+                {/* May add a bookmark screen later. I deleted the bookmark.tsx file from the (tabs) and it would
+                need to be added back */}
+                {/* <Tabs.Screen 
                   name="bookmark"
                   options={{
                     title: 'Bookmark',
@@ -64,7 +66,7 @@ const TabsLayout = () => {
                         />
                     )
                   }}
-                />
+                /> */}
                 <Tabs.Screen 
                   name="create"
                   options={{
