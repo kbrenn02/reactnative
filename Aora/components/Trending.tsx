@@ -8,10 +8,10 @@ import { Video, ResizeMode, Audio } from 'expo-av';
 Animatable.initializeRegistryWithDefinitions({
     zoomIn: {
         from: { scaleX: 0.9, scaleY: 0.9 },
-        to: { scaleX: 1.1, scaleY: 1.1 },
+        to: { scaleX: 1, scaleY: 1 },
     },
     zoomOut: {
-        from: { scaleX: 1.1, scaleY: 1.1 },
+        from: { scaleX: 1, scaleY: 1 },
         to: { scaleX: 0.9, scaleY: 0.9 },
     },
 });
@@ -67,7 +67,9 @@ const TrendingItem = ({ activeItem, item }: Record<string, any>) => {
             { play ? (
                 <Video
                 // This was uri: items.video but the videos that were uploaded weren't supported, so this is a filler video
-                    source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }}
+                // https://www.w3schools.com/html/mov_bbb.mp4
+                // The video I uploaded worked, but the default videos the tutorial had didn't
+                    source={{ uri: item.video }}
                     className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
                     resizeMode={ResizeMode.CONTAIN}
                     useNativeControls

@@ -40,7 +40,8 @@ const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avat
             {play ? (
                 <Video
                 // This was uri: items.video but the videos that were uploaded weren't supported, so this is a filler video
-                    source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }}
+                //'https://www.w3schools.com/html/mov_bbb.mp4'
+                    source={{ uri: video }}
                     className="w-full h-60 rounded-xl mt-3"
                     resizeMode={ResizeMode.CONTAIN}
                     useNativeControls
