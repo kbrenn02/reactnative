@@ -1,4 +1,4 @@
-import { View, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, FlatList, TouchableOpacity, Image, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
@@ -9,14 +9,26 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import InfoBox from "../../components/InfoBox";
 import { router } from "expo-router";
+import { useState } from "react";
 
 const Profile = () => {
 
     const { user, setUser, setIsLoggedIn } = useGlobalContext();
     // User is potentially null.
     // @ts-ignore: Ignore the type error for now
-    const { data: posts } = useAppwrite(() => getUserPosts(user.id));
+    const { data: posts, refetch } = useAppwrite(() => getUserPosts(user.id));
     // with how the 'User' is defined in GlobalProvider, I added an "id" attribute, not the $id that
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // refetch was made in the useAppwrite.tsx file and basically just calls the fetch function
+        // to reload what is being shown.
+        // As a result, we are able to call the refetch function and refresh the page like on Insta, TikTok, etc.
+        await refetch();
+        setRefreshing(false);
+    }
 
     const logout =  async() => {
         await signOut();
@@ -90,6 +102,7 @@ const Profile = () => {
                         subtitle="No videos found for this search query"
                     />
                 )}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
             />
             
         </SafeAreaView>
