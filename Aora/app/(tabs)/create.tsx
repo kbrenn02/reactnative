@@ -7,10 +7,13 @@ import * as DocumentPicker from 'expo-document-picker'
 import { icons } from '../../constants'
 import CustomButton from '../../components/CustomButton'
 import { router } from 'expo-router'
+import { createVideo } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Create = () => {
 
     const [uploading, setUploading] = useState(false)
+    const { user } = useGlobalContext();
 
     const [form, setForm] = useState({
         title: '',
@@ -40,14 +43,10 @@ const Create = () => {
                 // @ts-ignore: Ignore the type error for now
                 setForm({...form, video: result.assets[0] })
             }
-        } else {
-            setTimeout(() => {
-                Alert.alert('Document picked', JSON.stringify(result, null, 2))
-            }, 100)
         }
     };
 
-    const submit = () => {
+    const submit = async () => {
         if(!form.title || !form.title || !form.thumbnail || !form.video) {
             return Alert.alert('Please fill in all the fields')
         }
@@ -55,7 +54,10 @@ const Create = () => {
         setUploading(true)
 
         try {
-            
+            await createVideo({
+                // @ts-ignore: Ignore the type error for now
+                ...form, userId: user.id
+            });
 
             Alert.alert('Success', 'Post uploaded successfully')
 
