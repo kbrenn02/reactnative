@@ -130,10 +130,16 @@ export const getCurrentUser = async (): Promise<User | undefined> => {
 }
 
 export const getAllPosts = async () => {
+    
+    const queries = [
+        Query.orderDesc('$createdAt'),
+    ];
+
     try {
         const posts = await databases.listDocuments(
             databaseId,
-            videoCollectionId
+            videoCollectionId,
+            queries
         )
         
         return posts.documents;
@@ -228,10 +234,12 @@ export const signOut = async () => {
 export const uploadFile = async (file: any, type: any) => {
     if(!file) return;
 
-    // take everything out of the file
-    const { mimeType, ...rest } = file;
-    // assign the type to mimeType
-    const asset = { type: mimeType, ...rest}
+    const asset = { 
+        name: file.fileName,
+        type: file.mimeType,
+        size: file.fileSize,
+        uri: file.uri
+    }
 
     try {
         const uploadedFile = await storage.createFile(

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { Video, ResizeMode } from 'expo-av'
-import * as DocumentPicker from 'expo-document-picker'
+import * as ImagePicker from 'expo-image-picker'
 import { icons } from '../../constants'
 import CustomButton from '../../components/CustomButton'
 import { router } from 'expo-router'
@@ -24,12 +24,11 @@ const Create = () => {
 
     const openPicker = async (selectType: any) => {
         // Open up a modal that lets you pick and image or video
-        const result = await DocumentPicker.getDocumentAsync
-        ({
-            type: selectType === 'image' 
-                ? ['image/png', 'image/jpg']
-                : ['video/mp4', 'video/gif']
-        })
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: selectType === 'image' ? ImagePicker.MediaTypeOptions.Images : ImagePicker.MediaTypeOptions.Videos,
+            aspect: [4, 3],
+            quality: 1
+        });
 
         if(!result.canceled) {
             if(selectType === 'image') {
@@ -71,7 +70,6 @@ const Create = () => {
                 thumbnail: null,
                 prompt: ''
             })
-
             setUploading(false)
         }
     }
@@ -103,9 +101,7 @@ const Create = () => {
                             // @ts-ignore: Ignore the type error for now
                                 source={{ uri: form.video.uri }}
                                 className='w-full h-64 rounded-2xl'
-                                useNativeControls
                                 resizeMode={ResizeMode.COVER}
-                                isLooping
                             />
                         ) : (
                             <View className='w-full h-40 px-4 bg-black-100 rounded-2xl justify-center items-center'>

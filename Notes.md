@@ -109,3 +109,5 @@ To create backend functionality for your app, including a DB, do it through Appw
 #### More installations
 - npm install react-native-animatable expo-av (this allows for animations with the first and playing videos with the second)
 - npm install expo-document-picker to allow users to pick photos and videos from their phones and upload them
+- ^^ probably don't do this because it pulls from "documents," not the photo gallery
+    - instead do: npx expo install expo-image-picker
