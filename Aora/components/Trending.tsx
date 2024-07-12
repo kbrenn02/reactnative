@@ -1,6 +1,6 @@
-import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
+import { FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { icons } from '../constants';
 import { Video, ResizeMode, Audio } from 'expo-av';
 
